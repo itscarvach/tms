@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      Role     @default(OPERATIONS)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TransportData {
+  id             String   @id @default(uuid())
+  vendor         String
+  office        String
+  date          DateTime
+  shiftTime     String
+  tripType      String
+  routeType     String
+  tripId        String   @unique
+  routeName     String?
+  routeNumber   String
+  vehicleRegNo  String
+  driver        String
+  vehicleType   String
+  rostered      Int
+  boarded       Int
+  guard         Boolean
+  plannedKms    Float
+  actualKms     Float
+  locality      String
+  zone          String
+  actualLocality String
+  actualZone    String
+  billingCodeP  String?
+  costP         Float?
+  billingCodeA  String?
+  costA         Float?
+  remarks       String?
+  finalDistance Float
+  finalCost     Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum Role {
+  SUPER_ADMIN
+  OPS_HEAD
+  OPERATIONS
+}
